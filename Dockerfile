@@ -9,4 +9,4 @@ RUN set -x; \
         rm -rf /var/lib/apt/lists/* /tmp/*
 
 COPY entrypoint /
-CMD ["/entrypoint"]
+ENTRYPOINT ["/entrypoint"]
