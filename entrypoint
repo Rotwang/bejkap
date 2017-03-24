@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+die() {
+  echo "$*" >&2
+  exit 2
+}
+
+source="$1"
+target="$2"
+
+[[ "$#" -lt 2 ]] || die "Two arguments required <source> <target>"
+
+echo $source
+echo $target
