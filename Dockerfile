@@ -1,4 +1,4 @@
-FROM: ubuntu:16.04
+FROM ubuntu:16.04
 
 RUN set -x; \
         export DEBIAN_FRONTEND=noninteractive; \
