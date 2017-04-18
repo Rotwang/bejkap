@@ -5,6 +5,7 @@ RUN set -ex; \
         apt-get -qq -y update; \
         apt-get -qq -o=Dpkg::Use-Pty=0 install -y --no-install-recommends \
         nfs-common; \
+        gawk; \
         apt-get -qq clean; \
         rm -rf /var/lib/apt/lists/* /tmp/*
 
