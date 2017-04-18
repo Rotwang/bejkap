@@ -18,12 +18,9 @@ mkdir -p "$src" "$trg"
 mount -t nfs4 -o nfsvers=4.1,ro "$source_nfs_url" "$src"
 mount -t nfs4 -o nfsvers=4.1,rw "$target_nfs_url" "$trg"
 
-latest_modified_file="$(find /sbin/ /bin/ -type f -printf "%T@ %p\n" | sort -g | awk 'END {print $2}')"
+latest_modified_file="$(find "$src" "$trg" -type f -printf "%T@ %p\n" | sort -g | awk 'END {print $2}')"
 latest_modified_file_canon="$(readlink -f "$latest_modified_file")"
 
 if grep "^$trg" <<< "$latest_modified_file_canon"; then
   die "Source storage ($src) was modified earlier than the target storage ($trg)."
 fi
-
-echo $source
-echo $target
