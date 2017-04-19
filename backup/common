@@ -1,0 +1,36 @@
+#!/usr/bin/env bash
+
+die() {
+  echo "$*" >&2
+  exit 2
+}
+
+mount_shares() {
+  local source_nfs_url="$1"
+  local target_nfs_url="$2"
+
+  (
+    set -x
+    mkdir -p "$src" "$trg"
+    mount -t nfs4 -o nfsvers=4.1,ro "$source_nfs_url" "$src"
+    mount -t nfs4 -o nfsvers=4.1,rw "$target_nfs_url" "$trg"
+  )
+
+  local latest_modified_file="$(find "$src" "$trg" -type f -printf "%T@ %p\n" | sort -g | awk 'END {print $2}')"
+  local latest_modified_file_canon="$(readlink -f "$latest_modified_file")"
+
+  if grep "^$trg" <<< "$latest_modified_file_canon"; then
+    die "Source storage ($src) was modified earlier than the target storage ($trg)."
+  fi
+}
+
+src="/mnt/source"
+trg="/mnt/target"
+
+[[ "$#" -lt 2 ]] && die "Two arguments required <source> <target>"
+
+set -e
+
+mount_shares $1 $2
+mkdir -p "$trg/0"
+shift 2

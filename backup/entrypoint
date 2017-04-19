@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+action="$1"
+shift
+
+case $action in
+  init)   exec /initialize "$@" ;;
+  backup) exec /run "$@" ;;
+  *)      echo "Unrecognized command." >&2; exit 2 ;;
+esac

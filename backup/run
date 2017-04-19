@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+. /common "$1" "$2"
+
+numClients="$1"
+clientNum="$2"
+
+set -e
+
+cd "$src"
+for myContent in $(ls -A . | awk "NR%$numClients==$clientNum"); do
+  ( set -x; rsync -s -ah --stats --delete --numeric-ids "$myContent" "$trg/0/"; )
+done
