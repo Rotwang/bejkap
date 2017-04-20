@@ -5,6 +5,8 @@
 numClients="$1"
 clientNum="$2"
 
+echo "numClients: $numClients, clientNum: $clientNum"
+
 set -e
 
 cd "$src"
