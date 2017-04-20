@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-. /common "$1" "$2"
+. /common
 
 numClients="$1"
 clientNum="$2"
