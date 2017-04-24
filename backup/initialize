@@ -16,3 +16,5 @@ printf "%s\n" */ |
 
 ( set -x; cp -al "$trg/0" "$trg/1"; )
 
+rsync -a --delete --include='*/' --exclude='*' "$src/" "$trg/0"
+
