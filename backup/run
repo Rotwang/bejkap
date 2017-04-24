@@ -24,7 +24,7 @@ cd blobs
 for d in */; do
   (
     cd "$d"
-    for f in $(ls -A | grep -v '^content$' | awk "NR%$numClients==$clientNum")
+    for f in $(ls -A | grep -v '^content$' | awk "NR%$numClients==$clientNum"); do
       ( set -x; rsync -s -ah --delete --numeric-ids "$f" "$trg/0/nexus/blobs/$d/"; )
     done
 
