@@ -2,7 +2,7 @@
 
 . /common
 
-RETAIN="$((${RETAIN:-5}-1))"
+RETAIN="$${RETAIN:-5}"
 RETAIN_STR="$(for ((i=0;i<RETAIN;i++)); do echo -n O; done)"
 
 cd "$trg"
