@@ -41,6 +41,6 @@ namesep="%"
 set -e
 
 mount_shares $1 $2
-mkdir -p "$trg/$(name_prefix)${namesep}O"
+( set -x; mkdir -p "$trg/$(name_prefix)${namesep}O"; )
 latest_trg="$(get_latest_trg)"
 shift 2

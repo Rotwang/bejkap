@@ -11,7 +11,7 @@ cd "$trg"
 
 printf "%s\n" */ |
   sed 's|/$||' |
-  egrep "$namesep"'O+$' |
+  egrep "$namesep"'OO+$' |
   sort -t"%" -k2 -r |
   while read d; do ( set -x; mv "$d" "${d}O"; ); done
 
