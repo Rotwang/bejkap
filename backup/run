@@ -16,7 +16,7 @@ cd nexus
 files_to_backup=($(ls -A | grep -v '^blobs$' | awk "NR%$numClients==$clientNum"))
 
 for myContent in ${files_to_backup[@]}; do
-  ( set -x; rsync -s -ah --stats --delete --numeric-ids "$myContent" "$trg/0/nexus"; )
+  ( set -x; rsync -s -ah --delete --numeric-ids "$myContent" "$trg/0/nexus"; )
 done
 
 cd blobs
@@ -24,14 +24,13 @@ cd blobs
 for d in */; do
   (
     cd "$d"
-    files_to_backup=($(ls -A | grep -v '^content$' | awk "NR%$numClients==$clientNum"))
-    for f in ${files_to_backup[@]}; do
-      rsync -s -ah --stats --delete --numeric-ids "$f" "$trg/0/nexus/blobs/$d/"
+    for f in $(ls -A | grep -v '^content$' | awk "NR%$numClients==$clientNum")
+      ( set -x; rsync -s -ah --delete --numeric-ids "$f" "$trg/0/nexus/blobs/$d/"; )
     done
 
     cd content
     for x in $(ls -A | awk "NR%$numClients==$clientNum"); do
-      rsync -s -ah --stats --delete --numeric-ids "$x" "$trg/0/nexus/blobs/$d/content/"
+      ( set -x; rsync -s -ah --delete --numeric-ids "$x" "$trg/0/nexus/blobs/$d/content/"; )
     done
   )
 done
