@@ -3,19 +3,20 @@
 . /common
 
 RETAIN="$((${RETAIN:-5}-1))"
+RETAIN_STR="$(for ((i=0;i<RETAIN;i++)); do echo -n O; done)"
 
 cd "$trg"
 
-( set -x; rm -rf "$RETAIN"; )
+( set -x; rm -rf *%$RETAIN_STR*; )
 
 printf "%s\n" */ |
   sed 's|/$||' |
-  egrep '^[1-9][[:digit:]]*$' |
-  sort -gr |
-  while read d; do ( set -x; mv "$d" "$((d+1))"; ); done
+  egrep "$namesep"'O+$' |
+  sort -t"%" -k2 -r |
+  while read d; do ( set -x; mv "$d" "${d}O"; ); done
 
 (
   set -x;
-  cp -al "$trg/0" "$trg/1"
-  rsync -a --delete --include='*/' --exclude='*' "$src/" "$trg/0"
+  cp -al "$latest_trg" "${latest_trg}O"
+  rsync -a --delete --include='*/' --exclude='*' "$src/" "$latest_trg"
 )

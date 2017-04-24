@@ -24,13 +24,23 @@ mount_shares() {
   fi
 }
 
+name_prefix() {
+  date --iso-8601=seconds
+}
+
+get_latest_trg() {
+  echo "$trg/"*"${namesep}O"
+}
+
 src="/mnt/source"
 trg="/mnt/target"
+namesep="%"
 
 [[ "$#" -lt 2 ]] && die "Two arguments required <source> <target>"
 
 set -e
 
 mount_shares $1 $2
-mkdir -p "$trg/0"
+mkdir -p "$trg/$(name_prefix)${namesep}O"
+latest_trg="$(get_latest_trg)"
 shift 2
