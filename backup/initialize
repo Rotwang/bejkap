@@ -14,7 +14,8 @@ printf "%s\n" */ |
   sort -gr |
   while read d; do ( set -x; mv "$d" "$((d+1))"; ); done
 
-( set -x; cp -al "$trg/0" "$trg/1"; )
-
-rsync -a --delete --include='*/' --exclude='*' "$src/" "$trg/0"
-
+(
+  set -x;
+  cp -al "$trg/0" "$trg/1"
+  rsync -a --delete --include='*/' --exclude='*' "$src/" "$trg/0"
+)
