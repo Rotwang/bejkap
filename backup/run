@@ -9,6 +9,8 @@ echo "numClients: $numClients, clientNum: $clientNum"
 
 set -e
 
+latest_trg="$(get_latest_trg)"
+
 cd "$src"
 
 cd nexus

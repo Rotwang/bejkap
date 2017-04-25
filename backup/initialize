@@ -11,12 +11,13 @@ cd "$trg"
 
 printf "%s\n" */ |
   sed 's|/$||' |
-  egrep "$namesep"'OO+$' |
+  egrep "$namesep"'O+$' |
   sort -t"%" -k2 -r |
   while read d; do ( set -x; mv "$d" "${d}O"; ); done
 
+latest_trg="$(name_prefix)${namesep}O"
 (
   set -x;
-  cp -al "$latest_trg" "${latest_trg}O"
+  if ! cp -al *${namesep}OO "$latest_trg"; then mkdir -p "$latest_trg"; fi
   rsync -a --delete --include='*/' --exclude='*' "$src/" "$latest_trg"
 )
