@@ -15,7 +15,7 @@ printf "%s\n" */ |
   sort -t"%" -k2 -r |
   while read d; do ( set -x; mv "$d" "${d}O"; ); done
 
-latest_trg="$(name_prefix)${namesep}O"
+latest_trg="$trg/$(name_prefix)${namesep}O"
 (
   set -x;
   if ! cp -al *${namesep}OO "$latest_trg"; then mkdir -p "$latest_trg"; fi
